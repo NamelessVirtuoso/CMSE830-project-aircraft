@@ -6,3 +6,4 @@ seaborn==0.11.2
 streamlit==1.13.0
 tweepy==4.10.1
 xlrd<2.0
+Scikit-learn==0.20.0
