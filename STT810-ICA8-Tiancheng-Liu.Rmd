@@ -1,0 +1,104 @@
+---
+title: "ICA8"
+author: "Tiancheng Liu"
+date: "2022-09-29"
+output:
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+
+## Question 1
+
+### a
+
+F(x) = 1/16 * x2
+
+x^2 = 16p
+
+x = 4 sqrt(p)
+
+### b
+
+```{r}
+un <- runif(1000000)
+
+hist(un)
+
+```
+
+
+### c
+
+```{r}
+un_4 <- 4*(un^(1/2))
+```
+
+
+### d
+
+```{r}
+hist(un_4)
+```
+
+
+### e
+
+```{r}
+ex <- mean(un_4)
+
+ex2 <- mean(un_4^2)
+
+ex2 - ex^2
+             
+```
+
+
+## Question 2
+
+### a
+
+The expected amount demand is 100000.
+
+### b
+
+100000*20 is the profit.
+
+### c
+
+```{r}
+demand <- rnorm(1000000,100000,25000)
+```
+
+
+### d
+
+```{r}
+sales_vol = pmin(demand,120000)
+
+```
+
+### e
+
+```{r}
+actual <- sales_vol*20
+```
+
+### f
+
+```{r}
+mean(actual)
+```
+
+Thus result is a little less than 2000000. I believe it is reasonable as the standard deviation determine the range is 75000 to 120000, the upper bound should have been 125000 but was limited to 120000, thus the result will be a little less than 2000000.

@@ -1,0 +1,73 @@
+---
+title: "STT810 ICA2 Tiancheng Liu"
+date: "2022-09-08"
+output:
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+---
+
+## Question 1
+
+### a
+```{r}
+
+library(zoo)
+
+
+
+x_t <- rep(0,20)
+for (i in 1:20){
+  x_t[i] <- system.time(sample(c(0, 1), 1000000*(2*i), replace = TRUE))[1]
+}
+x_t
+
+
+```
+
+We can see that 10000000 runs takes about 1 second.
+
+### b
+
+```{r}
+sample(1:10,10)
+```
+
+We see now the 10 numbers are in random order.
+
+## Question 2
+
+### a
+
+```{r}
+p_b <- (0.6*0.8+(1-0.6)*0.1)
+p_ab <- 0.6*0.8/p_b
+p_ab
+```
+
+The probability that a given message is spam, given that is
+marked as spam is 0.923.
+
+
+### b
+
+```{r}
+#A : not marked as spam
+#B : spam
+#P(A|B) = 0.5
+#0.5 = P(B|A)P(A / (P(A)*P(B|A) + (1-P(A))*P(A|B))
+#0.5 = (1-0.8)*P(A)/P(A*(1-0.8)+(1-P(A))*0.9)
+p_a <- 0.45/0.55
+p_a
+```
+
+Thus 81.818 percent of all emails have to be spam in order for 50% of emails which are not marked to be spam to be actually spam.
+
+
