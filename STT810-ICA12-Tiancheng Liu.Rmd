@@ -1,0 +1,61 @@
+---
+title: "ICA12"
+date: "2022-10-11"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+---
+
+## Question 1
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
+
+
+```{r}
+cars <- read.csv("cars_multi.csv")
+```
+
+```{r}
+ggplot(data = cars) + geom_histogram(aes(x = weight),color = "aquamarine",fill="lightblue")
+```
+
+## Question 2
+
+```{r}
+ggplot(data = cars, aes(x = acceleration, fill = as.character(cylinders))) + geom_histogram()
+```
+
+## Question 3
+
+```{r}
+ggplot(data = cars, aes(x = factor(cylinders), y = as.numeric(horsepower))) + geom_boxplot()
+
+```
+
+## Question 4
+
+```{r}
+ggplot(data = cars, aes(y = mpg, x = weight, colour = as.character(cylinders))) + geom_point()
+```
+
+
+From the plot we can see that, the higher the weight the lower the mpg, the more the cylinders the less the mpg, the more the cylinders the higher the weight.
+
+
+
+
+

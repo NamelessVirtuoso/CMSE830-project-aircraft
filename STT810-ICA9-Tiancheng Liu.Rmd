@@ -1,0 +1,92 @@
+---
+title: "ICA9"
+date: "2022-10-03"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Question 1
+
+
+```{r}
+man <- (-20)*0.35 + 40*0.35 + 100*0.3
+pur <- 10*0.35 + 45*0.35 + 70*0.3
+
+man
+pur
+```
+
+We can see that purchase has high expected profit.
+
+## Question 2
+
+### a
+
+set high demand probability as p
+
+man <- -20*0.35 + 40*(1-0.35-p) + 100*p
+man <- 60*p + 19
+pur <- 10*0.35 + 45*(1-0.35-p) + 70*p
+pur <- 25*p + 32.75
+
+### b
+
+```{r}
+x = runif(100,0,0.65)
+plot(x = x, y = 60*x + 19, type = "l")
+lines(x = x, y = 25*x + 32.75)
+```
+\
+### c
+
+60*p + 19 = 25*p + 32.75
+p = 0.393
+
+Thus when high demand has probability of 0.393 the expected value will be equal.
+
+## Question 3
+
+### a
+
+```{R}
+a = 0.3 * 5000000
+b = 1 * (1000000+5000000)/2
+c = 3200000
+a
+b
+c
+```
+The product c has the highest expected value.
+
+### b
+
+```{r}
+pa = 0.3
+samp = sample(1000000:5000000, 1000000,replace = T)
+pb = (length(samp[samp > 4000000]))/1000000
+c_sim = rexp(1000000,1/3200000)
+pc = length(c_sim[c_sim>4000000])/1000000
+pa
+pb
+pc
+```
+
+
+Thus product a is most likely to achieve 4000000 revenue.

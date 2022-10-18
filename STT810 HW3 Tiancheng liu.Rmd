@@ -1,0 +1,487 @@
+---
+title: "HW3"
+date: "2022-10-17"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+### a.1
+
+```{r}
+dis_1 <- rbinom(1000000, 12, 0.2)
+mean(dis_1)
+var(dis_1)
+sd(dis_1)
+```
+
+The mean is 2.4, varaiance is 1.92, standard deviation is 1.387.
+
+### a.2
+
+```{r}
+12*0.2
+12*0.2*(1-0.2)
+sqrt(12*0.2*(1-0.2))
+```
+The mean is 2.4, varaiance is 1.92, standard deviation is 1.38.
+
+### a.3
+
+```{r}
+seq_a <- seq(0, 12)
+exv_a <- sum(seq_a * dbinom(seq_a, 12, 0.2) )
+var_a <- sum(seq_a**2 * dbinom(seq_a, 12, 0.2)) - exv_a**2
+std_a <- sqrt(var_a)
+exv_a
+var_a
+std_a
+```
+
+The mean is 2.4, varaiance is 1.92, standard deviation is 1.386.
+
+### b.1
+
+```{r}
+exp_b <- rexp(1000000, 0.03)
+exv_b <- mean(exp_b)
+var_b <- var(exp_b)
+std_b <- sd(exp_b)
+exv_b
+var_b
+std_b
+```
+
+The mean is 33.3, varaiance is 1109.34, standard deviation is 33.3.
+
+### b.2
+
+```{r}
+exv_b2 <- 1/0.03
+var_b2 <- 1/(0.03**2)
+std_b2 <- sqrt(var_b2)
+exv_b2
+var_b2
+std_b2
+```
+
+The mean is 33.33, varaiance is 1111.11, standard deviation is 33.33.
+
+### c.1
+
+```{r}
+poi_c <- rpois(1000000, 8)
+exv_c <- mean(poi_c)
+var_c <- var(poi_c)
+std_c <- sd(poi_c)
+exv_c
+var_c
+std_c
+```
+
+The mean is 7.99, varaiance is 8.00, standard deviation is 2.83.
+
+### c.2
+
+```{r}
+exv_c2 <- 0.4 * 20
+var_c2 <- 0.4 * 20
+std_c2 <- sqrt(var_c2)
+exv_c2
+var_c2
+std_c2
+```
+
+The mean is 8, varaiance is 8, standard deviation is 2.828.
+
+### d.1
+
+```{r}
+dis_d <- runif(1000000, 0, 6)
+exv_d <- mean(dis_d)
+var_d <- var(dis_d)
+std_d <- sd(dis_d)
+exv_d
+var_d
+std_d
+```
+
+The mean is 2.99, varaiance is 2.99, standard deviation is 1.73.
+
+### d.2
+
+```{r}
+exv_d2 <- (0 + 6)/2
+var_d2 <- 6**2 /12
+std_d2 <- sqrt(var_d2)
+exv_d2
+var_d2
+std_d2
+```
+
+The mean is 3, varaiance is 3, standard deviation is 1.732.
+
+## Question 2
+
+### a
+
+```{r}
+ex_1 <- 0.3 * 0.8* 9000000
+ex_2 <- 0.6 * 0.9 * 0.7 * (2000000 + 8000000)/2 + 0.6 * 0.9 * 0.3 *((2000000 + 8000000)/2 - (1 + 3000000)/2)
+ex_1
+ex_2
+```
+
+Expected value for product 1 is 2160000.
+
+Expected value for product 2 is 2457000.
+
+### b
+
+#### product 1
+
+```{r}
+set.seed(123)
+sim <- sample(c(0,1), 1000000, prob = c(0.7, 0.3), replace = TRUE) * sample(c(0,1), 1000000, prob = c(0.2, 0.8), replace = TRUE) * rexp(1000000, 1/9000000)
+ave <- mean(sim)
+prob <- mean(sim >= 500000)
+ave
+prob
+```
+
+For product 1, the mean is 2164100, the probability to get money back is 0.227.
+
+#### product 2
+
+```{r}
+set.seed(234)
+sim_2 <- sample(c(0,1), 1000000, replace = TRUE, prob = c(0.4, 0.6)) * sample(c(0,1), 1000000, replace = TRUE, prob = c(0.1, 0.9))
+for(i in 1:length(sim_2)){
+  if(sim_2[i] == 1)
+    sim_2[i] <- sim_2[i] * runif(1, 2000000, 8000000)
+}
+
+for(j in 1:length(sim_2)){
+  if (sim_2[j] > 0){
+    infri <- runif(1, 1, 3000000)
+    sim_2[j] <- sim_2[j] - sample(c(0, infri), 1, prob = c(0.7, 0.3))
+  }
+}
+
+ave_2 <- mean(sim_2)
+prob_2 <- mean(sim_2 >= 500000)
+ave_2
+prob_2
+```
+For product 2, the mean is 2451333, the probability to get money back is 0.529.
+
+### c
+
+```{r}
+mean(sim > sim_2)
+```
+
+About 19% simulations in product 1 make more money than product 2.
+
+### d
+
+```{r}
+mean(sim >= 7000000)
+mean(sim_2 >= 7000000)
+```
+
+Product 1 has 11% change to earn more than 7000000 dollars.
+
+Product 2 has 6.7% change to earn more than 7000000 dollars.
+
+Thus product 1 is more likely to earn more than 7000000 in revenue.
+
+## Question 3
+
+### a
+
+```{r}
+library(mvtnorm)
+cor_xy <- -0.3
+var_x <- 1
+var_y <- 2
+mean_x <- -1
+mean_y <- 2
+cov_xy <- cor_xy * sqrt(var_y) * sqrt(var_x)
+sigma <- cbind(c(var_x, cov_xy), c(cov_xy, var_y))
+x <- seq(-2, 0, by = 0.1)
+y <- seq(1, 3, by = 0.1)
+z <- matrix(nrow = length(x), ncol = length(y))
+for (i in 1:length(x)){
+  for (j in 1:length(y)){
+    z[i, j] <- dmvnorm(c(x[i], y[j]), c(-1, 2), sigma)
+  }
+}
+contour(x, y, z)
+```
+
+
+### b
+
+```{R}
+library(MASS)
+sim_point <- mvrnorm(1000, mu=c(-1, 2), Sigma = sigma)
+plot(sim_point)
+```
+
+### c
+
+```{R}
+set.seed(12)
+sim_1m <- mvrnorm(1000000, mu=c(-1, 2), Sigma = sigma)
+
+ex_1m <- mean(sim_1m[,1])
+ey_1m <- mean(sim_1m[,2])
+var_x <- var(sim_1m[,1])
+var_y <- var(sim_1m[,2])
+ex_xy <- mean(sim_1m[,1] + sim_1m[,2])
+var_xy <- var(sim_1m[,1] + sim_1m[,2])
+e_xpy <- ex_xy - ex_1m - ey_1m
+var_xpy <- var_xy - var_x - var_y - 2*cov_xy
+
+ex_5 <- c()
+for(i in 1:1000000){
+  if(sim_1m[i,2] > 2.5 && sim_1m[i,2] < 3.5){
+    ex_5[i] = sim_1m[i,1]
+  }
+}
+
+
+```
+
+#### c1
+```{r}
+ex_1m
+```
+
+E(x) is -0.999.
+
+#### c2
+```{r}
+ey_1m
+```
+
+E(y) is 1.999.
+
+#### c3
+```{r}
+var_x
+```
+
+```{r}
+var_y
+```
+
+Var(x) is 1, Var(y) is 2.
+
+#### c4
+```{r}
+e_xpy
+var_xpy
+```
+
+E(X+Y) is 2.220446e-16, Var(X+Y) is -0.00123035.
+
+#### c5
+```{r}
+mean(ex_5,na.rm = T)
+```
+
+E(X|Y = 3) is -1.205132.
+
+## Question 4
+
+### a
+
+```{r}
+set.seed(114)
+ave_4 <- c()
+for( i in 1:2000){
+  sim_4 <- rexp(100, 1/3)
+  ave_4[i] <- mean(sim_4)
+}
+ave_4
+```
+
+The mean value of each simulation is showed above.
+
+### b
+
+```{r}
+mean(ave_4)
+var(ave_4)
+```
+
+The mean value is 3.00, variance is 0.89.
+
+### c
+
+```{R}
+set.seed(514)
+ave_1k <- c()
+for( i in 1:2000){
+  sim_1k <- rexp(1000, 1/3)
+  ave_1k[i] <- mean(sim_1k)
+}
+
+ave_10k <- c()
+for( i in 1:2000){
+  sim_10k <- rexp(10000, 1/3)
+  ave_10k[i] <- mean(sim_10k)
+}
+
+ave_100k <- c()
+for( i in 1:2000){
+  sim_100k <- rexp(100000, 1/3)
+  ave_100k[i] <- mean(sim_100k)
+}
+
+ave_1m <- c()
+for( i in 1:2000){
+  sim_1m <- rexp(1000000, 1/3)
+  ave_1m[i] <- mean(sim_1m)
+}
+
+mean(ave_1k)
+var(ave_1k)
+
+mean(ave_10k)
+var(ave_10k)
+
+mean(ave_100k)
+var(ave_100k)
+
+mean(ave_1m)
+var(ave_1m)
+```
+
+Thus:
+For n = 100, mean is 3, variance is 0.89.
+
+For n = 1000, mean is 3, variance is 0.009.
+
+For n = 10000, mean is 3, variance is 0.00089.
+
+For n = 100000, mean is 3, variance is 0.00009.
+
+For n = 1000000, mean is 3, variance is 0.000009.
+
+### e
+
+```{r}
+plot(x = log(c(100,1000,10000,100000,1000000)), y = log(c(var(ave_4),var(ave_1k),var(ave_10k),var(ave_100k),var(ave_1m))))
+
+slope = (log(var(ave_4))-log(var(ave_1m)))/(log(100) - log(1000000))
+slope
+```
+
+We can see that, the shape is close to a straight line with slope -0.99., and it is expected with central limit theorem.
+
+## Question 5
+
+### a
+$$p(x)=\frac{1}{x^{2}}$$
+$$cdf(x)=\int_{1}^{x}\frac{1}{x^{2}}dx$$
+
+$$cdf(x)=(-1)x^{-1}-(-1)1^{-1}=1-\frac{1}{x}$$
+Verify:
+
+$$cdf(1)=1-1=0$$
+$$cdf(x_{lim \to \infty })=1-0=1$$
+$$cdf(x_{lim \to \infty })-cdf(1)=1-0=1$$
+Thus we verified the minimum is 0 and the maximum is 1.
+
+### b
+
+$$y=1-\frac{1}{x}$$
+
+The quantile function is:
+
+
+$$q(y) =\frac{1}{1-y}$$
+### c
+
+```{r}
+set.seed(1919)
+ave_100 <- c()
+for( i in 1:2000){
+    seq_5<- runif(100)
+    sim_100 <- 1/(1 - seq_5)
+  ave_100[i] <- mean(sim_100)
+}
+
+ave_1k <- c()
+for( i in 1:2000){
+    seq_5<- runif(1000)
+    sim_1k <- 1/(1 - seq_5)
+  ave_1k[i] <- mean(sim_1k)
+}
+
+
+ave_10k <- c()
+for( i in 1:2000){
+    seq_5<- runif(10000)
+    sim_10k <- 1/(1 - seq_5)
+  ave_10k[i] <- mean(sim_10k)
+}
+
+ave_100k <- c()
+for( i in 1:2000){
+    seq_5<- runif(100000)
+    sim_100k <- 1/(1 - seq_5)
+  ave_100k[i] <- mean(sim_100k)
+}
+
+ave_1m <- c()
+for( i in 1:2000){
+    seq_5<- runif(1000000)
+    sim_1m <- 1/(1 - seq_5)
+  ave_1m[i] <- mean(sim_1m)
+}
+
+mean(ave_100)
+var(ave_100)
+
+mean(ave_1k)
+var(ave_1k)
+
+mean(ave_10k)
+var(ave_10k)
+
+mean(ave_100k)
+var(ave_100k)
+
+mean(ave_1m)
+var(ave_1m)
+```
+
+```{r}
+plot(x = log(c(100,1000,10000,100000,1000000)), y = log(c(var(ave_4),var(ave_1k),var(ave_10k),var(ave_100k),var(ave_1m))))
+
+slope = (log(var(ave_4))-log(var(ave_1m)))/(log(100) - log(1000000))
+slope
+```
+
+
+We can see that, there is no convergence behavior in this experiment, as the number of simulation increases the variance does not decrease, but rather get close to a value around 10000. Now with limited tries I am not confident in this conclusion, but I think this is still a random result, the result has no relation to the simulartion number.
