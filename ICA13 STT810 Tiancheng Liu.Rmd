@@ -1,0 +1,79 @@
+---
+title: "ICA13"
+date: "2022-10-18"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    theme: united
+    highlight: tango
+    css: my.css
+---
+## Question 1
+
+### a
+
+```{r}
+f <- function(x) x^2 + 3 * sin(x)
+plot(x = seq(-8,8, by = 0.1), y = f(seq(-8,8, by = 0.1)))
+```
+I see a curved, not optimized line.
+
+
+### b
+
+```{r}
+optimize(f, c(-3,3))
+```
+
+The minimum is -0.915.
+
+### c
+
+```{r}
+optimize(f, c(-3,3),maximum = T)
+```
+The maximum is 2.999.
+
+## Question 2
+
+### a
+f(x, y) = x2 + y2 - 3x + 2y + sin(xy)
+```{r}
+fm <- function(x) x[1]^2 + x[2]^2 - 3 * x[1] + 2*x[2] + sin(x[1]*x[2])
+
+x_min <- -5
+x_max <- 5
+y_min <- -5
+y_max <- 5
+x <- seq(-5, 5, by = 0.05)
+y <- seq(-5, 5, by = 0.05)
+z <- matrix(nrow=length(x), ncol=length(y))
+for(i in 1:length(x)){
+  for(j in 1:length(y)){
+    z[i,j] <- fm(c(x[i],y[j]))
+  }
+}
+contour(x,y,z)
+
+```
+
+
+The minimum occurs around x = 2, y = -2.
+
+
+### b
+
+```{r}
+optim(c(-5,5),fm)
+```
+
+With the optim function we find the minimum value is -4.249, occurs at x = 1.513, y = -1.02.
+
